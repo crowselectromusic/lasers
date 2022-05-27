@@ -1,0 +1,9 @@
+{
+  "name": "jscad_panels",
+  "version": "0.0.1",
+  "description": "Generate Eurorack front panels for laser cutting",
+  "main": "index.html",
+  "author": "Cory Alder <coryalder@gmail.com>",
+  "license": "GPLv3.0",
+  "private": true
+}

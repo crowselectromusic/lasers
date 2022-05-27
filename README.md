@@ -24,17 +24,14 @@ const svgData = serializer({unit: 'mm'}, panel); // don't export the 3d? idk hav
 
 ### TODOs:
 
-1. bundle this offline using node, which should allow me to include the dxf serializer stuff
-2. lookup data for features - rotary pot shaft sizes,encoder shaft sizes, slide pot lengths and widths, toggle switch sizes, led size
-3. add margins to all my holes, most will need extra space, LEDs might need less?
-4. fix the broken intial render
-5. get saving and loading json working in a useful way
-6. get saving out dxf/svg files working
-7. look into importing some model files, which could be rendered in place to really get the experience (i.e. not just a panel w holes)
-8. add a minimal themeing css library, so it looks less janky
-9. work this into a "Framework" of sorts, so I can use it without forking for other projects
-10. figure out how / if I can handle the two 1U specs (intellijel and the other one)
-11. add doepfer spec link down at the bottom
+1. lookup data for features - rotary pot shaft sizes,encoder shaft sizes, slide pot lengths and widths, toggle switch sizes, led size
+2. add margins to all my holes, most will need extra space, LEDs might need less?
+3. add switch for oval holes
+4. look into importing some model files, which could be rendered in place to really get the experience (i.e. not just a panel w holes)
+5. add a minimal themeing css library, so it looks less janky
+6. work this into a "Framework" of sorts, so I can use it without forking for other projects
+7. figure out how / if I can handle the two 1U specs (intellijel and the other one) - currently handled in the UI but NOT handled when you export / import (defaults to the first 1U spec it sees)
+8. add a switch to toggle the "doepfer inset" vs nominal width on and off - need this because 1U PulpLogic is pricisely xHP wide, no weird insets - eurorack and intellijel are not
 
 #### Features that would be nice but I am not currently working on (pull requests welcome):
 

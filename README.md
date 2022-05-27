@@ -1,4 +1,4 @@
-# LaserPanel
+# Crows Eurorack Laser Panel Maker
 #### by [Crows Electromusic](https://crowselectromusic.com)
 
 A simple web app to generate front panels for modular synthesizers using a laser cutter. 

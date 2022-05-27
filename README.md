@@ -48,6 +48,13 @@ const svgData = serializer({unit: 'mm'}, panel); // don't export the 3d? idk hav
   - re-order features with up & down buttons
   - port the whole thing to typescript for sanity's sake, my god js is a hellhole
 
+## Development Guide
+
+1. If you don't have it already, [install yarn](https://yarnpkg.com/getting-started/install).
+2. In the root project directory, run `yarn install`.
+3. To run the development server, run `yarn start`.
+4. To output build files to the `./dist` directory, run `yarn build`.
+
 ## Guidelines for derivative works
 
 This code is licensed under the GPLv3.0

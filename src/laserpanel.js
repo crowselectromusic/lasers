@@ -1,10 +1,14 @@
-const { booleans, colors, primitives, transforms, extrusions } = jscadModeling // modeling comes from the included MODELING library
-const { prepareRender, drawCommands, cameras, controls, entitiesFromSolids } = jscadReglRenderer
+
+const Alpine = require('alpinejs').default;
+
+const { booleans, colors, primitives, transforms, extrusions } = require('@jscad/modeling') // modeling comes from the included MODELING library
+const { prepareRender, drawCommands, cameras, controls, entitiesFromSolids } = require('@jscad/regl-renderer')
 const { translate } = transforms
 const { extrudeLinear } = extrusions
 const { intersect, subtract } = booleans
 const { colorize } = colors
 const { cube, cuboid, line, sphere, star, rectangle, roundedRectangle, circle } = primitives
+
 
 // ********************
 // Renderer configuration and initiation.
@@ -438,7 +442,7 @@ document.addEventListener('alpine:init', () => {
 
 // this updates the entities
 // then tells the renderer about it
-function re_render(model) {
+window.re_render = function re_render(model) {
   let entities = entitiesFromSolids({}, create_entities(model));
   renderOptions.entities = [
     gridOptions,
@@ -447,3 +451,7 @@ function re_render(model) {
   ];
   renderer(renderOptions);
 }
+
+window.info = info; // make info available to the browser context
+
+Alpine.start();

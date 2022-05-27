@@ -2,8 +2,23 @@
   "name": "jscad_panels",
   "version": "0.0.1",
   "description": "Generate Eurorack front panels for laser cutting",
-  "main": "index.html",
   "author": "Cory Alder <coryalder@gmail.com>",
   "license": "GPLv3.0",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@jscad/dxf-serializer": "^2.1.9",
+    "@jscad/modeling": "^2.9.4",
+    "@jscad/regl-renderer": "^2.6.0",
+    "@jscad/svg-serializer": "^2.3.7",
+    "alpinejs": "^3.10.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.6.0"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  }
 }

@@ -8,10 +8,7 @@ const { extrudeLinear } = extrusions;
 const { intersect, subtract } = booleans;
 const { colorize } = colors;
 
-const dxfSerializer = require('@jscad/dxf-serializer');
-const svgSerializer = require('@jscad/svg-serializer');
-
-const { create_re_render_fn } = require('./jscad_wrapper.js');
+const { JSCADWrapper } = require('./jscad_wrapper.js');
 const { info } = require('./info.js'); // constants like hp & menu options like toggle switch sizes
 
 // ********************
@@ -35,7 +32,7 @@ const renderFeature = (feature, width, height) => {
 }
 
 // this is my main modelling function, the model is created here.
-const create_entities = (model) => {
+const create_entities = (model, flat_only) => {
   const hp_looked_up = info.hp_options[model.hp_index];
   const holes = info.hole_positions[model.holes_index];
   const actual_width = hp_looked_up.actual;
@@ -88,6 +85,10 @@ const create_entities = (model) => {
 
   const panel = subtract(panel_outline, screw_holes, ...rendered_subtract_features);
 
+  if (flat_only) {
+    return [panel, ...rendered_non_subtract_features];
+  }
+
   const body = extrudeLinear({height: 1.6}, panel); // this is where we make it 3D
   const colorBody = colorize([0.05, 0.7, 0.05], body);
 
@@ -119,58 +120,47 @@ document.addEventListener('alpine:init', () => {
     deleteFeature(index) {
       this.features.splice(index, 1);
       re_render(this);
-    },
-
-    saveData() {
-      let output = {};
-      output.vp = info.vp_options[this.vp_index].nominal;
-      output.hp = info.hp_options[this.hp_index].hp;
-      output.hole_positions = info.hole_positions[this.holes_index].screw_positions;
-      output.features = this.features.map(function(feature){
-        return {
-          type: feature.type,
-          size: feature.size,
-          position: {
-            x: feature.position.x,
-            y: feature.position.y,
-            relative_to: feature.position.relative_to
-          }
-        }
-      });
-
-      alert(JSON.stringify(output));
-    },
-
-    // replace the current data with data from the import
-    loadData(importString) {
-      const importData = JSON.parse(importString);
-      this.vp_index = info.vp_options.findIndex((opt)=>{return opt.nominal == importData.vp});
-      this.hp_index = lookupHp(importData.hp) || this.hp_index;
-      this.holes_index = lookupHoles(importData.holes) || this.holes_index;
-      this.features = importData.features.map(function(importFeature){
-        if (!importFeature.type) {
-          return undefined; // no type, no feature.
-        }
-
-        return {
-          type: importFeature.type,
-          size: importFeature.size || info.feature_size_options[importFeature.type][0].size || 5,
-          position: {
-            x: importFeature.position.x || 0,
-            y: importFeature.position.y || 0,
-            relative_to: importFeature.position.relative_to || "center",
-          }
-        }
-      }).filter(anyValue => typeof anyValue !== 'undefined' ) || [];
     }
   });
 
-  re_render(Alpine.store('panel'));
-})
+  setTimeout(function(){ // timeout to give it a chance to finish loading, otherwise it doesn't render until you move the viewport
+    re_render(Alpine.store('panel'));
+   }, 100);
+});
 
-const re_render = create_re_render_fn(create_entities);
+const containerElement = document.getElementById("jscad");
+const jscad = JSCADWrapper(containerElement, create_entities);
 
-window.re_render = re_render; // make re_render available to alpine scripts in html
+window.re_render = jscad.re_render; // make re_render available to alpine scripts in html
 window.info = info; // make info available to alpine scripts in html
-
+window.ImportExport = require('./import_export.js')(create_entities, re_render);
+//window.Alpine = Alpine;
 Alpine.start();
+
+/*
+{
+    vp_index: 2, // how many U it is.
+    hp_index: 3,
+    holes_index: 0,
+    features: [],
+
+    addFeature(feature_type) {
+      this.features.push({
+        type: feature_type,
+        size: info.feature_size_options[feature_type][0].size,
+        position: {
+          x: 0,
+          y: 0,
+          relative_to: "center"
+        }
+      });
+      re_render(this);
+    },
+
+    deleteFeature(index) {
+      this.features.splice(index, 1);
+      re_render(this);
+    },
+}
+
+*/

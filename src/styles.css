@@ -13,12 +13,17 @@ a {
   color: darkgreen;
 }
 
-button {
+button, .upload {
   border: none;
   padding: 0.5em;
+  text-align: center;
+  background-color: rgb(233, 233, 237);
+  margin: 0px;
+  font-size: 0.84em;
+  box-sizing: border-box;
 }
 
-button:hover {
+button:hover, .upload:hover {
   background-color: rgb(13, 222, 13);
 }
 
@@ -42,6 +47,7 @@ button:hover {
 #footer {
   border-top: 1px solid lightgray;
   font-size: 80%;
+  padding: 1em;
 }
 
 /* class-based styling */
@@ -71,7 +77,7 @@ button:hover {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
-    align-items: auto;
+    align-items: center;
     align-content: start;
     padding: 0.5em;
     flex: 0 0 auto;
@@ -82,10 +88,27 @@ button:hover {
   border-bottom: solid 1px black;
 }
 
+.featurePropertyRow {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: start;
+  padding: 0.5em;
+  flex: 0 0 auto;
+}
+
 .col50 {
   width: 50%;
 }
 
 .notes {
   padding: 2em;
+}
+
+.range-label {
+  display: inline-block;
+  width: 1em;
+  text-align: right;
 }

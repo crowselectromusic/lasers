@@ -10,7 +10,8 @@
     "@jscad/modeling": "^2.9.4",
     "@jscad/regl-renderer": "^2.6.0",
     "@jscad/svg-serializer": "^2.3.7",
-    "alpinejs": "^3.10.2"
+    "alpinejs": "^3.10.2",
+    "file-saver": "^2.0.5"
   },
   "devDependencies": {
     "parcel": "^2.6.0"

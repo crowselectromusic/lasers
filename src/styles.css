@@ -77,6 +77,11 @@ button:hover {
     flex: 0 0 auto;
 }
 
+.featureRow {
+  padding: 2em; 
+  border-bottom: solid 1px black;
+}
+
 .col50 {
   width: 50%;
 }

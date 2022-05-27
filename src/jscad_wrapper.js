@@ -22,6 +22,7 @@ const state = {}
 
 // prepare the camera
 state.camera = Object.assign({}, perspectiveCamera.defaults)
+state.camera.position = [0, -20, 200];
 
 perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
 perspectiveCamera.update(state.camera, state.camera)
@@ -96,7 +97,7 @@ const doRotatePanZoom = () => {
   }
 
   if (zoomDelta) {
-    const updated = orbitControls.zoom({ controls:state.controls, camera:state.camera, speed: zoomSpeed }, zoomDelta)
+    const updated = orbitControls.zoom({ controls:state.controls, camera: state.camera, speed: zoomSpeed }, zoomDelta)
     state.controls = { ...state.controls, ...updated.controls }
     zoomDelta = 0
     updateView = true

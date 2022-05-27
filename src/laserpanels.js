@@ -1,12 +1,15 @@
 
 const Alpine = require('alpinejs').default;
 
-const { booleans, colors, primitives, transforms, extrusions } = require('@jscad/modeling')
-const { cube, cuboid, line, sphere, star, rectangle, roundedRectangle, circle } = primitives
-const { translate } = transforms
-const { extrudeLinear } = extrusions
-const { intersect, subtract } = booleans
-const { colorize } = colors
+const { booleans, colors, primitives, transforms, extrusions } = require('@jscad/modeling');
+const { cube, cuboid, line, sphere, star, rectangle, roundedRectangle, circle } = primitives;
+const { translate } = transforms;
+const { extrudeLinear } = extrusions;
+const { intersect, subtract } = booleans;
+const { colorize } = colors;
+
+const dxfSerializer = require('@jscad/dxf-serializer');
+const svgSerializer = require('@jscad/svg-serializer');
 
 const { create_re_render_fn } = require('./jscad_wrapper.js');
 const { info } = require('./info.js'); // constants like hp & menu options like toggle switch sizes

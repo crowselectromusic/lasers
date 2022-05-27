@@ -62,37 +62,43 @@
           Add: <template x-for="(feature_name, feature_type) in info.feature_types">
             <button x-text="feature_name" @click="addFeature(feature_type)"></button>
           </template>
-        <ul>
           <template x-for="(feature, index) in features" :key="index">
-            <li>
-                <button @click="deleteFeature(index)">[delete]</button>
+            <div class="featureRow">
+              <div class="featurePropertyRow">
                 <span x-text="info.feature_types[feature.type]"></span>
-              <br />
+                <span style="float:right;"><button @click="deleteFeature(index)">[delete]</button></span>
+              </div>
               
+
+              <div class="featurePropertyRow">
                 Size:
                 <select x-model.number="feature.size" @change="re_render($store.panel)">
                   <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.size">
                     <option x-text="size_option.display" :value="size_option.size"></option>
                   </template>
                 </select>
-              <br />
+              </div>
 
+
+              <div class="featurePropertyRow">
                 Position X: <input type="text" x-model.number="feature.position.x" @change="re_render($store.panel)">
-              <br />
+              </div>
 
+
+              <div class="featurePropertyRow">
                 Position Y: <input type="text" x-model.number="feature.position.y" @change="re_render($store.panel)">
-              <br />
+              </div>
               
+              <div class="featurePropertyRow">
                 Relative to:
                 <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
                   <template x-for="(pos, index) in info.frames_of_reference" :key="index">
                     <option x-text="pos.display" :value="index"></option>
                   </template>
                 </select>
-              <br />
-            </li>
+              </div>
+            </div>
           </template>
-        </ul>
       </div>
     </div>
 

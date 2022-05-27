@@ -51,7 +51,7 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: auto;
   align-content: start
 }
@@ -74,6 +74,7 @@ button:hover {
     align-items: auto;
     align-content: start;
     padding: 0.5em;
+    flex: 0 0 auto;
 }
 
 .col50 {

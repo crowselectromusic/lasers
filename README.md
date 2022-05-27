@@ -34,7 +34,7 @@ const svgData = serializer({unit: 'mm'}, panel); // don't export the 3d? idk hav
 8. add a minimal themeing css library, so it looks less janky
 9. work this into a "Framework" of sorts, so I can use it without forking for other projects
 10. figure out how / if I can handle the two 1U specs (intellijel and the other one)
-12. add doepfer spec link down at the bottom
+11. add doepfer spec link down at the bottom
 
 #### Features that would be nice but I am not currently working on (pull requests welcome):
 

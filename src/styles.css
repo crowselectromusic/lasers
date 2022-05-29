@@ -1,16 +1,6 @@
 /* general styling */
-
-body {
-  font-family: Helvetica, Arial, sans-serif;
-  accent-color: rgb(13, 222, 13);
-}
-
 p, ul {
   line-height: 150%;
-}
-
-a {
-  color: darkgreen;
 }
 
 button, .upload {
@@ -37,50 +27,11 @@ button:hover, .upload:hover {
   outline: 1px solid darkgreen;
 }
 
-/* main header, top of the page */
-#header {
-  text-align: center;
-  padding: 2em;
-  padding-bottom: 0;
-}
-
-#footer {
-  border-top: 1px solid lightgray;
-  font-size: 80%;
-  padding: 1em;
-}
-
 /* class-based styling */
 
-/* root container, init flexbox */
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: start;
-  align-items: auto;
-  align-content: start
-}
-
-/* items go side-by-side on big screens, and stack vertically on smaller screens */
-.item {
-  flex: 1 1 auto;
-  margin: 2em;
-}
 
 .buttongrid {
   width: 45%;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    align-content: start;
-    padding: 0.5em;
-    flex: 0 0 auto;
 }
 
 .featureRow {
@@ -99,9 +50,6 @@ button:hover, .upload:hover {
   flex: 0 0 auto;
 }
 
-.col50 {
-  width: 50%;
-}
 
 .notes {
   padding: 2em;

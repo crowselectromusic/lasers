@@ -1,0 +1,146 @@
+<style>
+  @import "./styles.css";
+</style>
+
+<script language="javascript" src="laserpanels.js" id="LASERPANEL" type="module" defer></script>
+
+<div id="header">
+  <h1>Crows Eurorack Laser Panel Maker</h1>
+  <p>A tool to generate dxf or svg outline files you can use to laser cut panels for your eurorack modular synthesizer.</p>  
+  <p>Made by <a href="https://crowselectromusic.com">Crows Electromusic</a>, for you. This app is <a href="https://github.com/crowselectromusic/laserpanels">open source</a> - feel free to build something new with it.</p>
+</div>
+
+<div class="container">
+  <div id="parameters" class="item">
+    <div x-data="$store.panel">
+      <div class="row">
+        <label class="buttongrid upload" for="file-upload">
+          Import Panel Definition
+          <input id="file-upload" type="file" accept=".json,application/json" hidden="true" @change="ImportExport.loadData($store.panel, $event)" />
+        </label>
+        <button class="buttongrid" @click="ImportExport.saveSvg($store.panel)">Export Panel as SVG</button>
+      </div>
+      <div class="row">
+        <button class="buttongrid" @click="ImportExport.saveData($store.panel)">Export Panel Definition</button>
+        <button class="buttongrid" @click="ImportExport.saveDxf($store.panel)">Export Panel as DXF</button>
+      </div>
+      <h2>Panel outline</h2>
+      <div class="row">
+        Format:
+        <select x-model.number="vp_index" @change="re_render($store.panel)">
+          <template x-for="(vp_option, index) in info.vp_options" :key="index">
+            <option x-text="vp_option.display" :value="index" :selected="index === vp_index"></option>
+          </template>
+        </select>
+      </div>
+      <div class="row">
+        <span>
+        Width (HP):
+        </span>
+        <span>
+        <input type="range"
+          :max="Object.keys(info.hp_options).length-1"
+          min="0" :value="hp_index"
+          class="slider"
+          id="hp_index"
+          x-model.number="hp_index"
+          @change="re_render($store.panel)">
+        <label for="hp_index" x-text="info.hp_options[hp_index].hp" class="range-label"></label>
+        </span>
+      </div>
+    
+      <div class="row">
+        Screw configuration:
+        <select x-model.number="holes_index" @change="re_render($store.panel)">
+          <template x-for="(hole, index) in info.hole_positions" :key="index">
+              <option x-text="hole.display" :value="index" :selected="index === holes_index"></option>
+          </template>
+        </select>
+      </div>
+      <h2>Features</h2>
+        Add: <template x-for="(feature_name, feature_type) in info.feature_types">
+          <button x-text="feature_name" @click="addFeature(feature_type)"></button>
+        </template>
+        <template x-for="(feature, index) in features" :key="index">
+          <div class="featureRow">
+            <div class="featurePropertyRow">
+              <span x-text="info.feature_types[feature.type]"></span>
+              <span style="float:right;"><button @click="deleteFeature(index)">[delete]</button></span>
+            </div>
+            
+            <div class="featurePropertyRow">
+              Size:
+              <select x-model.number="feature.size" @change="re_render($store.panel)">
+                <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.size">
+                  <option x-text="size_option.display" :value="size_option.size" :selected="size_option.size === feature.size"></option>
+                </template>
+              </select>
+            </div>
+            <div class="featurePropertyRow">
+              Position X: <input type="text" x-model.number="feature.position.x" @change="re_render($store.panel)">
+            </div>
+            <div class="featurePropertyRow">
+              Position Y: <input type="text" x-model.number="feature.position.y" @change="re_render($store.panel)">
+            </div>
+            
+            <div class="featurePropertyRow">
+              Relative to:
+              <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
+                <template x-for="(pos, index) in info.frames_of_reference" :key="index">
+                  <option x-text="pos.display" :value="index" :selected="index === feature.position.relative_to"></option>
+                </template>
+              </select>
+            </div>
+          </div>
+        </template>
+    </div>
+  </div>
+  <div id="jscad" class="item"></div>
+</div>
+
+<div class="notes">
+  <h2>Notes</h2>
+  <h4>Getting panels cut</h4>
+  <p>
+    There are many online services that will laser cut something out for you, but we recommned finding a local hackspace / maker space and learning to laser yourself, or finding someone in your community with a laser cutter and a soft spot for synth nerds. You might make a new friend, and you'll definitely save some money.
+  </p>
+  <h4>Validating the design</h4>
+  <p>
+    If you're laser cutting these yourself, we strongly recommend cutting them out in cardboard first, to validate everything is positioned correctly. If you're sending them off to be cut, you can print them out on paper and cut out the holes with an exacto-knife.
+  </p>
+  <h4>Cutting order</h4>
+  <p>
+    Make sure to cut out the holes first. Once you've cut the outline of your panel, it will move out of place, and cause the holes to be in the wrong place.
+  </p>
+  <h4>Other projects</h4>
+  <p>
+    There are other projects that tackle generating synth panels, if you're interested in trying a project with a different focus, check out:
+    <ul>
+      <li>SYNSI's <a href="https://syinsi.com/eurorack-panel-designer-for-inkscape/">Eurorack Panel Designer</a> for Inkscape</li>
+      <li>FASELUNARE's <a href="http://www.synthpanels.design/">Synth Panel Designer</a> for Inkscape</li>
+      <li>joem's <a href="https://github.com/joem/kicad-eurorack-panel-generator">KiCad Eurorack Panel Generator</a></li>
+    </ul>
+      
+  </p>
+  <h4>Rules used to generate these panels:</h4>
+  <ul x-data>
+    <li>Eurorack panels are <span x-text="info.vp_options[2].height"></span>mm high</li>
+    <li>1U "Pulp Logic" Tiles follow the spec laid out by <a href="http://pulplogic.com/1u_tiles/">PulpLogic</a> and are <span x-text="info.vp_options[0].height"></span>mm high</li>
+    <li>1U "Intellijel" Tiles follow the spec laid out by <a href="https://intellijel.com/support/1u-technical-specifications/">Intellijel</a> and are <span x-text="info.vp_options[1].height"></span>mm high</li>
+    <li>Eurorack screws are inset <span x-text="(info.vp_options[2].height-info.vp_options[2].screw_height)/2"></span>mm from each side</li>
+    <li>Eurorack screw holes are <span x-text="info.constants.screw_hole_radius*2"></span>mm in diamter</li>
+    <li>1 HP is <span x-text="info.constants.horizontal_pitch_mm"></span>mm</li>
+    <li>Screw hole spacing is calculated as <code>max(module_hp - 3, 0) * 1HP</code></li>
+    <li>The actual width of a eurorack panel is slightly less than the nominal width, I don't understand the formula doepfer uses, but I've copied the data from the table on <a href="https://doepfer.de/a100_man/a100m_e.htm">this page</a>.</li>
+    <li>Slide potentiometers require a <span x-text="info.constants.slidepot_width"></span>mm opening</li>
+    <li>Rotary potentiometers require about a <span x-text="info.constants.rotarypot_margin"></span>mm margin</li>
+    <li>The exported files make NO attempt to account for laser kerf width.</li>
+  </ul>
+</div>
+<div id="footer" class="row">
+  <div class="col50">
+    Copyright 2022 Crows Electromusic, Co. <a href="https://instagram.com/crowselectromusic">instagram</a>, <a href="https://github.com/crowselectromusic">github</a>
+  </div>
+  <div class="col50">If you'd like to receive an email when we release something new, sign up here. We won't spam you, we'll just let you know when we have something interesting to tell you about.</div>
+ 
+</div>

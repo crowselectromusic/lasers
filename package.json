@@ -14,7 +14,8 @@
     "file-saver": "^2.0.5"
   },
   "devDependencies": {
-    "parcel": "^2.6.0"
+    "parcel": "^2.6.0",
+    "posthtml-include": "^1.7.4"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "source": "src/index.html",

@@ -724,6 +724,11 @@
     chrome-trace-event "^1.0.2"
     nullthrows "^1.1.1"
 
+"@picocss/pico@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@picocss/pico/-/pico-1.5.2.tgz#f04d1d3bc8957586dbab29b23c8fdecb418f6d5e"
+  integrity sha512-Y7LepVImg0CmRDT4W3iiO7SzGcB0MgGWoHCmn72fIZgFRQHck/LgnYb2S5lwmJPncMssPta1UwKxVQacadoaqw==
+
 "@swc/helpers@^0.3.15":
   version "0.3.16"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.3.16.tgz#896c44a5d476034d261f878bc4833da1624b1752"

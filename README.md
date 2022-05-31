@@ -24,8 +24,6 @@ It uses `yarn` for package management, and `parcel` for bundling the various mod
 2. Add margins to all my holes, most will need extra space, LEDs might need less?
 3. Add switch for oval holes
 4. Look into importing some model files, which could be rendered in place to really get the experience (i.e. not just a panel w holes)
-5. Add a minimal themeing css library, so it looks less janky
-6. Work this into a "Framework" of sorts so I can use, it without forking, for other projects
 7. figure out how / if I can handle the two 1U specs (intellijel and the other one) - currently handled in the UI but NOT handled when you export / import (defaults to the first 1U spec it sees)
 8. add a switch to toggle the "doepfer inset" vs nominal width on and off - need this because 1U PulpLogic is pricisely xHP wide, no weird insets - eurorack and intellijel are not
 

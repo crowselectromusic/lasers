@@ -109,8 +109,8 @@ document.addEventListener('alpine:init', () => {
         type: feature_type,
         size: info.feature_size_options[feature_type][0].size,
         position: {
-          x: 0,
-          y: 0,
+          x: 0.00,
+          y: 0.00,
           relative_to: "center"
         }
       });
@@ -137,30 +137,10 @@ window.ImportExport = require('./import_export.js')(create_entities, re_render);
 //window.Alpine = Alpine;
 Alpine.start();
 
-/*
-{
-    vp_index: 2, // how many U it is.
-    hp_index: 3,
-    holes_index: 0,
-    features: [],
-
-    addFeature(feature_type) {
-      this.features.push({
-        type: feature_type,
-        size: info.feature_size_options[feature_type][0].size,
-        position: {
-          x: 0,
-          y: 0,
-          relative_to: "center"
-        }
-      });
-      re_render(this);
-    },
-
-    deleteFeature(index) {
-      this.features.splice(index, 1);
-      re_render(this);
-    },
-}
-
-*/
+// navigating away warning - right now we only warn if you've got features added
+window.onbeforeunload = function(event) {
+  if (Alpine.store("panel").features.length > 0) {
+    return true;
+  }
+  return undefined;
+};

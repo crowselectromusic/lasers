@@ -7,10 +7,12 @@ button, .upload {
   border: none;
   padding: 0.5em;
   text-align: center;
-  background-color: rgb(233, 233, 237);
   margin: 0px;
   font-size: 0.84em;
   box-sizing: border-box;
+  border-radius: 5px;
+  background-color: rgb(67, 160, 71);
+  color: white;
 }
 
 button:hover, .upload:hover {
@@ -58,5 +60,21 @@ button:hover, .upload:hover {
 .range-label {
   display: inline-block;
   width: 1.5em;
+  text-align: right;
+}
+
+.addbuttons > button {
+  width: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+  display: inline;
+  margin: 0.5em;
+}
+
+table > tr:first-child {
+  text-align: left;
+}
+
+table > tr:last-child {
   text-align: right;
 }

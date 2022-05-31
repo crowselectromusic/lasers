@@ -4,90 +4,109 @@
 
 <script language="javascript" src="laserpanels.js" id="LASERPANEL" type="module" defer></script>
 
-<div class="grid">
-  <div id="parameters" class="item">
-    <div x-data="$store.panel">
-      <div class="row">
-        <label class="buttongrid upload" for="file-upload">
-          Import Panel Definition
-          <input id="file-upload" type="file" accept=".json,application/json" hidden="true" @change="ImportExport.loadData($store.panel, $event)" />
-        </label>
-        <button class="buttongrid" @click="ImportExport.saveSvg($store.panel)">Export Panel as SVG</button>
-      </div>
-      <div class="row">
-        <button class="buttongrid" @click="ImportExport.saveData($store.panel)">Export Panel Definition</button>
-        <button class="buttongrid" @click="ImportExport.saveDxf($store.panel)">Export Panel as DXF</button>
-      </div>
-      <h2>Panel outline</h2>
-      <div class="row">
-        Format:
-        <select x-model.number="vp_index" @change="re_render($store.panel)">
-          <template x-for="(vp_option, index) in info.vp_options" :key="index">
-            <option x-text="vp_option.display" :value="index" :selected="index === vp_index"></option>
-          </template>
-        </select>
-      </div>
-      <div class="row">
-        <span>
-        Width (HP):
-        </span>
-        <span>
-        <input type="range"
+<div class="grid container">
+  <div id="parameters" class="item" x-data="$store.panel">
+    <div class="row">
+      <label class="buttongrid upload" for="file-upload">
+        Import Panel Definition
+        <input id="file-upload" type="file" accept=".json,application/json" hidden="true" @change="ImportExport.loadData($store.panel, $event)" />
+      </label>
+      <button class="buttongrid" @click="ImportExport.saveSvg($store.panel)">Export Panel as SVG</button>
+    </div>
+    <div class="row">
+      <button class="buttongrid" @click="ImportExport.saveData($store.panel)">Export Panel Definition</button>
+      <button class="buttongrid" @click="ImportExport.saveDxf($store.panel)">Export Panel as DXF</button>
+    </div>
+
+    <table>
+      <tr>
+        <td colspan="2"><strong style="font-size: 1.5em">Panel outline</strong></td>
+      </tr>
+      <tr>
+        <td>
+          Format:
+        </td>
+        <td>
+          <select x-model.number="vp_index" @change="re_render($store.panel)">
+            <template x-for="(vp_option, index) in info.vp_options" :key="index">
+              <option x-text="vp_option.display" :value="index" :selected="index === vp_index"></option>
+            </template>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Width (<span for="hp_index" x-text="info.hp_options[hp_index].hp"></span>HP): 
+        </td>
+        <td>
+          <input type="range"
           :max="Object.keys(info.hp_options).length-1"
           min="0" :value="hp_index"
           class="slider"
           id="hp_index"
           x-model.number="hp_index"
-          @change="re_render($store.panel)">
-        <label for="hp_index" x-text="info.hp_options[hp_index].hp" class="range-label"></label>
-        </span>
-      </div>
-    
-      <div class="row">
-        Screw configuration:
-        <select x-model.number="holes_index" @change="re_render($store.panel)">
-          <template x-for="(hole, index) in info.hole_positions" :key="index">
-              <option x-text="hole.display" :value="index" :selected="index === holes_index"></option>
-          </template>
-        </select>
-      </div>
-      <h2>Features</h2>
-        Add: <template x-for="(feature_name, feature_type) in info.feature_types">
-          <button x-text="feature_name" @click="addFeature(feature_type)"></button>
-        </template>
-        <template x-for="(feature, index) in features" :key="index">
-          <div class="featureRow">
-            <div class="featurePropertyRow">
-              <span x-text="info.feature_types[feature.type]"></span>
-              <span style="float:right;"><button @click="deleteFeature(index)">[delete]</button></span>
+          @change="re_render($store.panel)">  
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Screw configuration:
+        </td>
+        <td>
+          <select x-model.number="holes_index" @change="re_render($store.panel)">
+            <template x-for="(hole, index) in info.hole_positions" :key="index">
+                <option x-text="hole.display" :value="index" :selected="index === holes_index"></option>
+            </template>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">Features</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          Add:
+          <div class="addbuttons">
+            <template x-for="(feature_name, feature_type) in info.feature_types">
+              <button x-text="feature_name" @click="addFeature(feature_type)"></button>
+            </template>
             </div>
-            
-            <div class="featurePropertyRow">
-              Size:
-              <select x-model.number="feature.size" @change="re_render($store.panel)">
-                <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.size">
-                  <option x-text="size_option.display" :value="size_option.size" :selected="size_option.size === feature.size"></option>
-                </template>
-              </select>
-            </div>
-            <div class="featurePropertyRow">
-              Position X: <input type="text" x-model.number="feature.position.x" @change="re_render($store.panel)">
-            </div>
-            <div class="featurePropertyRow">
-              Position Y: <input type="text" x-model.number="feature.position.y" @change="re_render($store.panel)">
-            </div>
-            
-            <div class="featurePropertyRow">
-              Relative to:
-              <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
-                <template x-for="(pos, index) in info.frames_of_reference" :key="index">
-                  <option x-text="pos.display" :value="index" :selected="index === feature.position.relative_to"></option>
-                </template>
-              </select>
-            </div>
+        </td>
+      </tr>
+    </table>
+  
+      <template x-for="(feature, index) in features" :key="index">
+        <div class="featureRow">
+          <div class="featurePropertyRow">
+            <span x-text="info.feature_types[feature.type]"></span>
+            <span style="float:right;"><button @click="deleteFeature(index)">[delete]</button></span>
           </div>
-        </template>
-    </div>
+          
+          <div class="featurePropertyRow">
+            Size:
+            <select x-model.number="feature.size" @change="re_render($store.panel)">
+              <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.size">
+                <option x-text="size_option.display" :value="size_option.size" :selected="size_option.size === feature.size"></option>
+              </template>
+            </select>
+          </div>
+          <div class="featurePropertyRow">
+            Position X: <input type="text" x-model.number="feature.position.x" @change="re_render($store.panel)">
+          </div>
+          <div class="featurePropertyRow">
+            Position Y: <input type="text" x-model.number="feature.position.y" @change="re_render($store.panel)">
+          </div>
+          
+          <div class="featurePropertyRow">
+            Relative to:
+            <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
+              <template x-for="(pos, index) in info.frames_of_reference" :key="index">
+                <option x-text="pos.display" :value="index" :selected="index === feature.position.relative_to"></option>
+              </template>
+            </select>
+          </div>
+        </div>
+      </template>
   </div>
   <div id="jscad" class="item"></div>
 </div>

@@ -8,14 +8,6 @@ a {
   }
 
   /* root container, init flexbox */
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: start;
-    align-items: auto;
-    align-content: start
-  }
   
   /* items go side-by-side on big screens, and stack vertically on smaller screens */
   .item {

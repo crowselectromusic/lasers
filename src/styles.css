@@ -35,7 +35,7 @@ button:hover, .upload:hover {
 
 
 .buttongrid {
-  width: 45%;
+  width: 100%;
 }
 
 .featureRow {
@@ -93,7 +93,7 @@ input, select, .slider {
   padding-bottom: 0;
 }
 
-table {
+.outlined-table {
   outline: solid 1px black;
 }
 

@@ -23,7 +23,7 @@ function arraysEqual(a, b) {
 
 function lookupVp(vp) {
     // return an index for a given hp value
-    const index = info.vp_options.findIndex(item => item.nominal == vp);
+    const index = info.vp_options.findIndex(item => item.identifier == vp);
     return index !== -1 ? index : undefined;
 }
 
@@ -71,7 +71,7 @@ function parseFeature(feature) {
 const ImportExport = (create_entities, re_render) => {
     this.saveData = (model) => {
         let outputObj = {};
-        outputObj.vp = info.vp_options[model.vp_index].nominal;
+        outputObj.vp = info.vp_options[model.vp_index].identifier;
         outputObj.hp = info.hp_options[model.hp_index].hp;
         outputObj.hole_positions = info.hole_positions[model.holes_index].screw_positions;
         outputObj.features = model.features.map(function(feature){
@@ -104,7 +104,8 @@ const ImportExport = (create_entities, re_render) => {
         
         reader.onload = (e) => {
             const importData = JSON.parse(e.target.result);
-            model.vp_index = lookupVp(importData.vp) || model.vp_index;
+            const looked_up_vp = lookupVp(importData.vp);
+            model.vp_index = looked_up_vp == undefined ? model.vp_index : looked_up_vp;
             model.hp_index = lookupHp(importData.hp) || model.hp_index;
             model.holes_index = lookupHoles(importData.hole_positions) || model.holes_index;
             model.features = importData.features.map(parseFeature).filter(anyValue => typeof anyValue !== 'undefined' ) || [];

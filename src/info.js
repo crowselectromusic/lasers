@@ -12,9 +12,9 @@ const info = {
     // vertical pitch options
     // TODO: once i've added the data for vp_options, we may just be able to change screw_height to be calculated (total_height - (3mm*2))  
     vp_options: [ // keyed by model.vp_index
-      { display: "1U \"Pulp Logic\" tiles", nominal: 1, height: 43.18, screw_height: 37.19},
-      { display: "1U \"Intellijel\" tiles", nominal: 1, height: 39.65, screw_height: 33.65},
-      { display: "3U Standard Eurorack Size", nominal: 3, height: 128.50, screw_height: 122.5},
+      { display: "1U \"Pulp Logic\" tiles", nominal: 1, height: 43.18, screw_height: 37.19, identifier: "1u-pulp"},
+      { display: "1U \"Intellijel\" tiles", nominal: 1, height: 39.65, screw_height: 33.65, identifier: "1u-intellijel"},
+      { display: "3U Standard Eurorack Size", nominal: 3, height: 128.50, screw_height: 122.5, identifier: "3u"},
     ],
   
     // the kinds of "features" you can add to a panel

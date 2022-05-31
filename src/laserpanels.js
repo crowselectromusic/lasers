@@ -51,13 +51,25 @@ const create_entities = (model, flat_only) => {
 
   const screw_hole_distance = Math.max(0, hp_looked_up.hp - 3) * info.constants.horizontal_pitch_mm;
 
-  const screw_holes_dict = {
-    tl: translate([-screw_hole_distance/2, +screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
-    tr: translate([+screw_hole_distance/2, +screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
-    bl: translate([-screw_hole_distance/2, -screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
-    br: translate([+screw_hole_distance/2, -screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
-  };
-  
+
+  let screw_holes_dict;
+
+  if (model.oval_screwholes == false) {
+    screw_holes_dict = {
+      tl: translate([-screw_hole_distance/2, +screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
+      tr: translate([+screw_hole_distance/2, +screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
+      bl: translate([-screw_hole_distance/2, -screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
+      br: translate([+screw_hole_distance/2, -screw_height/2, 0], circle({ radius: info.constants.screw_hole_radius, segments: info.constants.circle_quality})),
+    };
+  } else {
+    screw_holes_dict = {
+      tl: translate([-screw_hole_distance/2, +screw_height/2, 0], roundedRectangle({ size: [info.constants.screw_hole_radius*3, info.constants.screw_hole_radius*2+0.01], roundRadius: info.constants.screw_hole_radius })),
+      tr: translate([+screw_hole_distance/2, +screw_height/2, 0], roundedRectangle({ size: [info.constants.screw_hole_radius*3, info.constants.screw_hole_radius*2+0.01], roundRadius: info.constants.screw_hole_radius })),
+      bl: translate([-screw_hole_distance/2, -screw_height/2, 0], roundedRectangle({ size: [info.constants.screw_hole_radius*3, info.constants.screw_hole_radius*2+0.01], roundRadius: info.constants.screw_hole_radius })),
+      br: translate([+screw_hole_distance/2, -screw_height/2, 0], roundedRectangle({ size: [info.constants.screw_hole_radius*3, info.constants.screw_hole_radius*2+0.01], roundRadius: info.constants.screw_hole_radius })),
+    };
+  }
+
   const screw_holes = holes.screw_positions.map(function(location){ return screw_holes_dict[location] });
 
   let subtract_features = [];
@@ -102,6 +114,7 @@ document.addEventListener('alpine:init', () => {
     vp_index: 2, // how many U it is.
     hp_index: 3,
     holes_index: 0,
+    oval_screwholes: false,
     features: [],
 
     addFeature(feature_type) {

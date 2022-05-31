@@ -62,11 +62,15 @@
           Screw configuration:
         </td>
         <td>
-          <select x-model.number="holes_index" @change="re_render($store.panel)">
+          <select x-model.number="holes_index" @change="re_render($store.panel)" style="width: 45%; margin-right: 0.5em;">
             <template x-for="(hole, index) in info.hole_positions" :key="index">
                 <option x-text="hole.display" :value="index" :selected="index === holes_index"></option>
             </template>
           </select>
+          <label for="switch" style="display: inline">
+            <input type="checkbox" x-model="oval_screwholes" @change="re_render($store.panel)" id="ovals" name="switch" role="switch">
+            Oval
+          </label>
         </td>
       </tr>
     </table>

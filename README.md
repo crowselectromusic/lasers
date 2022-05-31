@@ -22,7 +22,7 @@ It uses `yarn` for package management, and `parcel` for bundling the various mod
 
 1. Lookup data for features - rotary pot shaft sizes,encoder shaft sizes, slide pot lengths and widths, toggle switch sizes, led size
 2. Add margins to all my holes, most will need extra space, LEDs might need less?
-3. Add switch for oval holes
+3. CHECK OVAL HOLE WIDTH ON A REAL MODULE
 4. Look into importing some model files, which could be rendered in place to really get the experience (i.e. not just a panel w holes)
 8. add a switch to toggle the "doepfer inset" vs nominal width on and off - need this because 1U PulpLogic is pricisely xHP wide, no weird insets - eurorack and intellijel are not
 

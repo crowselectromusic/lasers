@@ -49,11 +49,11 @@ const info = {
   
     // the chosen hole placement - this CLOUD be restricted by your choice of HP (hp_options incudes a holes property)
     hole_positions: [ // keyed by model.holes_index
-      { screw_positions: ["tl", "br"], display: "Top left + Bottom right" },
-      { screw_positions: ["tr", "bl"], display: "Top right + Bottom reft"},
-      { screw_positions: ["tr", "br"], display: "Top right + Bottom right" },
-      { screw_positions: ["tl", "bl"], display: "Top left + Bottom left"},
-      { screw_positions: ["tl", "tr", "bl", "br"], display: "Two top + two bottom"}
+      { screw_positions: ["tl", "br"], display: "\u2801\u00A0\u2804"                    },  // ⠈  ⠄
+      { screw_positions: ["tr", "bl"], display: "\u2804\u00A0\u2801"                    },  // ⠄  ⠈
+      { screw_positions: ["tr", "br"], display: "\u00A0\u00A0\u00A0\u205A"              },  //    ⠅
+      { screw_positions: ["tl", "bl"], display: "\u205A\u00A0\u00A0"                    },  // ⠅
+      { screw_positions: ["tl", "tr", "bl", "br"], display: "\u205A\u00A0\u00A0\u205A"  }   // ⠅  ⠅
     ],
   
     // Size choices, arranged by feature

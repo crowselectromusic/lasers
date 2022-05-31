@@ -23,10 +23,12 @@ button:hover, .upload:hover {
 
 /* the jscad canvas */
 #jscad{
-  width: 15cm;
-  height: 15cm;
-  margin: 2em;
-  outline: 1px solid darkgreen;
+  width: auto;
+  height: 95vh;
+  /* width: 15cm;
+  height: 15cm; */
+  /* margin: 2em; */
+  border: 1px solid black;
 }
 
 /* class-based styling */
@@ -78,3 +80,36 @@ table > tr:first-child {
 table > tr:last-child {
   text-align: right;
 }
+
+input[type="text"], input[type="range"] {
+  height: 1.5em;
+  margin-bottom: 0 !important;
+}
+
+input, select, .slider {
+  height: 1.5em !important;
+  margin-bottom: 0 !important;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+table {
+  outline: solid 1px black;
+}
+
+.feature-table-top-cell {
+  padding-top: 1.5em;
+}
+
+.feature-table-bottom-cell {
+  padding-bottom: 1.5em;
+}
+
+.sectiontitle {
+  font-size: 1.5em;
+  font-weight: bold;
+} 
+
+.featuretitle {
+  font-weight: bold;
+} 

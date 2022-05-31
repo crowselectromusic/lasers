@@ -4,7 +4,7 @@
 
 <script language="javascript" src="laserpanels.js" id="LASERPANEL" type="module" defer></script>
 
-<div class="grid container">
+<div class="grid container-fluid">
   <div id="parameters" class="item" x-data="$store.panel">
     <div class="row">
       <label class="buttongrid upload" for="file-upload">
@@ -18,9 +18,9 @@
       <button class="buttongrid" @click="ImportExport.saveDxf($store.panel)">Export Panel as DXF</button>
     </div>
 
-    <table>
+    <table style="margin-top: 1em;">
       <tr>
-        <td colspan="2"><strong style="font-size: 1.5em">Panel outline</strong></td>
+        <td colspan="2"><span class="sectiontitle">Panel outline</span></td>
       </tr>
       <tr>
         <td>
@@ -60,12 +60,13 @@
           </select>
         </td>
       </tr>
+    </table>
+    <table>
       <tr>
-        <td colspan="2">Features</td>
+        <td colspan="2"><span class="sectiontitle">Add features</span></td>
       </tr>
       <tr>
         <td colspan="2">
-          Add:
           <div class="addbuttons">
             <template x-for="(feature_name, feature_type) in info.feature_types">
               <button x-text="feature_name" @click="addFeature(feature_type)"></button>
@@ -74,38 +75,48 @@
         </td>
       </tr>
     </table>
-  
-      <template x-for="(feature, index) in features" :key="index">
-        <div class="featureRow">
-          <div class="featurePropertyRow">
-            <span x-text="info.feature_types[feature.type]"></span>
-            <span style="float:right;"><button @click="deleteFeature(index)">[delete]</button></span>
-          </div>
-          
-          <div class="featurePropertyRow">
+
+    <template x-for="(feature, index) in features" :key="index">
+    <table>
+        <tr>
+          <td class="feature-table-top-cell" colspan="2">
+            <span x-text="(index+1) + '. ' + info.feature_types[feature.type]" class="featuretitle"></span>
+            <span style="float:right;"><button @click="deleteFeature(index)">Delete feature</button></span>
+          </td>
+        </tr>
+        <tr>
+          <td>
             Size:
+          </td>
+          <td>
             <select x-model.number="feature.size" @change="re_render($store.panel)">
               <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.size">
                 <option x-text="size_option.display" :value="size_option.size" :selected="size_option.size === feature.size"></option>
               </template>
             </select>
-          </div>
-          <div class="featurePropertyRow">
-            Position X: <input type="text" x-model.number="feature.position.x" @change="re_render($store.panel)">
-          </div>
-          <div class="featurePropertyRow">
-            Position Y: <input type="text" x-model.number="feature.position.y" @change="re_render($store.panel)">
-          </div>
-          
-          <div class="featurePropertyRow">
-            Relative to:
-            <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
-              <template x-for="(pos, index) in info.frames_of_reference" :key="index">
-                <option x-text="pos.display" :value="index" :selected="index === feature.position.relative_to"></option>
-              </template>
-            </select>
-          </div>
-        </div>
+          </td>
+          <tr>
+            <td>
+              Position (X, Y):
+            </td>
+            <td>
+              <input type="text" x-model.number="feature.position.x" @change="re_render($store.panel)" style="width: 49%;">
+              <input type="text" x-model.number="feature.position.y" @change="re_render($store.panel)" style="width: 49%;">
+            </td>
+          </tr>
+          <tr>
+            <td class="feature-table-bottom-cell">
+              Relative to:
+            </td>
+            <td class="feature-table-bottom-cell">
+              <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
+                <template x-for="(pos, index) in info.frames_of_reference" :key="index">
+                  <option x-text="pos.display" :value="index" :selected="index === feature.position.relative_to"></option>
+                </template>
+              </select>
+            </td>
+          </tr>
+        </table>
       </template>
   </div>
   <div id="jscad" class="item"></div>

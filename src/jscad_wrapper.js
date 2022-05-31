@@ -40,8 +40,8 @@ const JSCADWrapper = (containerElement, regenerate_entities_fn) => {
       drawCmd: 'drawGrid',
       show: true
     },
-    size: [500, 500],
-    ticks: [25, 5],
+    size: [5.08*30, 5.08*45],
+    ticks: [5.08*5, 5.08],
     color: [0, 0, 1, 1],
     subColor: [0, 0, 1, 0.5]
   }

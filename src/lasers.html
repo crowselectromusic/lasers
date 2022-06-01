@@ -33,7 +33,7 @@
       </tr>
       <tr>
         <td>
-          Format:
+          <a href="#format-info">Format</a>:
         </td>
         <td>
           <select x-model.number="vp_index" @change="re_render($store.panel)">
@@ -59,7 +59,7 @@
       </tr>
       <tr>
         <td>
-          <a href="#doepferinsets">Doepfer Insets</a>
+          <a href="#doepferinsets-info">Doepfer Insets</a>:
         </td>
         <td>
           <label for="hp_inset" style="display: inline">
@@ -84,6 +84,21 @@
           </label>
         </td>
       </tr>
+      <tr>
+        <td>
+          <a href="#margins-info">Margins</a> (<span x-text="margin"></span>mm):
+        </td>
+        <td>
+          <input type="range"
+          :max="1.5"
+          min="0.0" :value="margin"
+          step="0.05"
+          class="slider"
+          id="margin"
+          x-model.number="margin"
+          @change="re_render($store.panel)">  
+        </td>
+      </tr>
     </table>
     <table class="outlined-table">
       <tr>
@@ -104,7 +119,8 @@
     <table class="outlined-table">
         <tr>
           <td class="feature-table-top-cell" colspan="2">
-            <span x-text="(index+1) + '. ' + info.feature_types[feature.type]" class="featuretitle"></span>
+            <span x-text="`${index+1}. `"></span>
+            <a :href="`#${feature.type}-info`" x-text="info.feature_types[feature.type]" class="featuretitle"></a>
             <span style="float:right;"><button @click="deleteFeature(index)">Delete feature</button></span>
           </td>
         </tr>
@@ -160,40 +176,100 @@
 
 <div class="notes">
   <h2>Notes</h2>
-  <h4>Getting panels cut</h4>
-  <p>
-    There are many online services that will laser cut something out for you, but we recommned finding a local hackspace / maker space and learning to laser yourself, or finding someone in your community with a laser cutter and a soft spot for synth nerds. You might make a new friend, and you'll definitely save some money.
-  </p>
-  <h4>Validating the design</h4>
-  <p>
-    If you're laser cutting these yourself, we strongly recommend cutting them out in cardboard first, to validate everything is positioned correctly. If you're sending them off to be cut, you can print them out on paper and cut out the holes with an exacto-knife.
-  </p>
-  <h4>Cutting order</h4>
-  <p>
-    Make sure to cut out the holes first. Once you've cut the outline of your panel, it will move out of place, and cause the holes to be in the wrong place.
-  </p>
-  <h4>Other projects</h4>
-  <p>
-    There are other projects that tackle generating synth panels, if you're interested in trying a project with a different focus, check out:
-    <ul>
-      <li>SYNSI's <a href="https://syinsi.com/eurorack-panel-designer-for-inkscape/">Eurorack Panel Designer</a> for Inkscape</li>
-      <li>FASELUNARE's <a href="http://www.synthpanels.design/">Synth Panel Designer</a> for Inkscape</li>
-      <li>joem's <a href="https://github.com/joem/kicad-eurorack-panel-generator">KiCad Eurorack Panel Generator</a></li>
+  <details id="format-info">
+    <summary>Format</summary>
+    <p>
+      There are three formats that fall under the "Eurorack" name. 3U, which is the standard height modules, and two competing 1U "tile" variations:
+
+      <ul x-data>
+        <li>1U "Pulp Logic" tiles follow the spec laid out by <a href="http://pulplogic.com/1u_tiles/">PulpLogic</a> and are <span x-text="info.vp_options[0].height"></span>mm high</li>
+        <li>1U "Intellijel" tiles follow the spec laid out by <a href="https://intellijel.com/support/1u-technical-specifications/">Intellijel</a> and are <span x-text="info.vp_options[1].height"></span>mm high</li>
+      </ul>
+      <p>
+        The difference is that intellijel tiles will work with any rails (at the cost of not sitting flush with the row above it), while pulplogic tiles will only work with "vector" style rails that don't have any kind of a lip at the top + bottom.
+      </p>
+    </p>
+  </details>
+  <details id="doepferinsets-info">
+    <summary>Doepfer Insets</summary>
+    <p>In the <a href="https://doepfer.de/a100_man/a100m_e.htm">original spec</a>, the actual width of a eurorack panel is slightly less than the calculated width, to leave   a small space between panels. This part of the spec isn't always followed.</p>
+  </details>
+  <details id="margins-info">
+    <summary>Margins</summary>
+    <p>This is the space to leave around the hole created for a feature. For   example, a rotary potentiometer with a 6mm shaft needs a hole larger than 6mm in order to be  able to move, and to leave space for differences in individual potentiometers positioning on   the board. This is applied as a radius, so a margin of 0.4mm applied to a 6mm hole gives a 6. 8mm diamter hole. We use 0.4mm.</p>
+  </details>
+  <details id="patchpoint-info">
+    <summary>Patch Points</summary>
+    <p>
+      Examples of the type of patch points here
+    </p>
+  </details>
+  <details id="rotarypot-info">
+    <summary>Rotary Potentiometers</summary>
+    <p>
+      Examples of the type of rotary pots here
+    </p>
+  </details>
+  <details id="slidepot-info">
+    <summary>Slide Potentiometers</summary>
+    <p>
+      Examples of the type of pots here
+    </p>
+  </details>
+  <details id="toggleswitch-info">
+    <summary>Toggle Switches</summary>
+    <p>
+      Examples of the type of toggles here
+    </p>
+  </details>
+  <details id="led-info">
+    <summary>LEDs</summary>
+    <p>
+      Examples of the type of leds here
+    </p>
+  </details>
+
+  <details open>
+    <summary>Getting panels cut</summary>
+    <p>
+      There are many online services that will laser cut something out for you, but we recommned finding a local hackspace / maker space and learning to laser yourself, or finding someone in your community with a laser cutter and a soft spot for synth nerds. You might make a new friend, and you'll definitely save some money.
+    </p>
+  </details>
+
+  <details open>
+    <summary>Validating the design</summary>
+    <p>
+      If you're laser cutting these yourself, we strongly recommend cutting them out in cardboard first, to validate everything is positioned correctly. If you're sending them off to be cut, you can print them out on paper and cut out the holes with an exacto-knife.
+    </p>
+  </details>
+
+  <details open>
+    <summary>Cutting order</summary>
+    <p>
+      Make sure to cut out the holes first. Once you've cut the outline of your panel, it will move out of place, and cause the holes to be in the wrong place.
+    </p>
+  </details>
+
+  <details open>
+    <summary>Other projects</summary>
+    <p>
+      There are other projects that tackle generating synth panels, if you're interested in trying a project with a different focus, check out:
+      <ul>
+        <li>SYNSI's <a href="https://syinsi.com/eurorack-panel-designer-for-inkscape/">Eurorack   Panel Designer</a> for Inkscape</li>
+        <li>FASELUNARE's <a href="http://www.synthpanels.design/">Synth Panel Designer</a> for  Inkscape</li>
+        <li>joem's <a href="https://github.com/joem/kicad-eurorack-panel-generator">KiCad Eurorack Panel Generator</a></li>
+      </ul>
+    </p>
+  </details>
+  <details>
+    <summary>Rules used to generate these panels</summary>
+    <ul x-data>
+      <li>Eurorack panels are <span x-text="info.vp_options[2].height"></span>mm high</li>
+      <li>Eurorack screws are inset <span x-text="(info.vp_options[2].height-info.vp_options[2].screw_height)/2"></span>mm from each side</li>
+      <li>Eurorack screw holes are <span x-text="info.constants.screw_hole_radius*2"></span>mm in diamter</li>
+      <li>1 HP is <span x-text="info.constants.horizontal_pitch_mm"></span>mm</li>
+      <li>Screw hole spacing is calculated as <code>max(module_hp - 3, 0) * 1HP</code></li>
+      <li>The exported files make NO attempt to account for laser kerf width.</li>
     </ul>
-      
-  </p>
-  <h4>Rules used to generate these panels:</h4>
-  <ul x-data>
-    <li>Eurorack panels are <span x-text="info.vp_options[2].height"></span>mm high</li>
-    <li>1U "Pulp Logic" Tiles follow the spec laid out by <a href="http://pulplogic.com/1u_tiles/">PulpLogic</a> and are <span x-text="info.vp_options[0].height"></span>mm high</li>
-    <li>1U "Intellijel" Tiles follow the spec laid out by <a href="https://intellijel.com/support/1u-technical-specifications/">Intellijel</a> and are <span x-text="info.vp_options[1].height"></span>mm high</li>
-    <li>Eurorack screws are inset <span x-text="(info.vp_options[2].height-info.vp_options[2].screw_height)/2"></span>mm from each side</li>
-    <li>Eurorack screw holes are <span x-text="info.constants.screw_hole_radius*2"></span>mm in diamter</li>
-    <li>1 HP is <span x-text="info.constants.horizontal_pitch_mm"></span>mm</li>
-    <li>Screw hole spacing is calculated as <code>max(module_hp - 3, 0) * 1HP</code></li>
-    <li id="doepferinsets">Doepfer Insets: In the official spec, the actual width of a eurorack panel is slightly less than the <a href="https://doepfer.de/a100_man/a100m_e.htm">calculated width</a>, to leave a small space between panels. This part of the spec isn't always followed.</li>
-    <li>Slide potentiometers require a <span x-text="info.constants.slidepot_width"></span>mm opening</li>
-    <li>Rotary potentiometers require about a <span x-text="info.constants.rotarypot_margin"></span>mm margin</li>
-    <li>The exported files make NO attempt to account for laser kerf width.</li>
-  </ul>
+  </details>
 </div>

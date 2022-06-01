@@ -20,13 +20,13 @@ It uses `yarn` for package management, and `parcel` for bundling the various mod
 
 ### TODOs:
 
-1. Add margins to all my holes, most will need extra space, LEDs might need less?
-2. CHECK OVAL HOLE WIDTH ON A REAL MODULE
-3. Look into importing some model files, which could be rendered in place to really get the experience (i.e. not just a panel w holes)
+1. Use the "margin" value that users enter in the modeling
+2. Check oval hole width on a real module to confirm the size
 
 #### Features that would be nice but I am not currently working on (pull requests welcome):
 
   - graphics / logos
+  - 3d models for parts
   - knob caps / fader caps
   - displays (LCD, 8-segment)
   - header pins

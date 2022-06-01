@@ -11,10 +11,8 @@ const info = {
     constants: {
       screw_hole_radius: 3.2/2.0, //mm
       horizontal_pitch_mm: 5.08, //mm
-      rotarypot_margin: 0.1, // mm // TODO THIS IS UNUSED
-      toggleswitch_margin: 0.1, // mm // TODO THIS IS UNUSED
-      patchpoint_margin: 0.1, // mm // TODO THIS IS UNUSED
       circle_quality: 20, // how many segments to render circles with
+      default_margin: 0.4, // mm, extra space to leave
     },
   
     // vertical pitch options
@@ -27,10 +25,10 @@ const info = {
   
     // the kinds of "features" you can add to a panel
     feature_types: { // keyed by model.features[].type
-      patch_point: "Patch Point",
+      patchpoint: "Patch Point",
       rotarypot: "Rotary Potentiometer",
       slidepot: "Slide Potentiometer",
-      toggle_switch: "Toggle Switch",
+      toggleswitch: "Toggle Switch",
       led: "LED"
     },
   
@@ -66,7 +64,7 @@ const info = {
   
     // Size choices, arranged by feature
     feature_size_options: {
-      patch_point: [
+      patchpoint: [
         { display:  "3.5mm / 1/8\"", size: 3.5  , shape: ShapeTypes.Circle, identifier: 3.5},
         { display: "6.35mm / 1/4\"", size: 6.35 , shape: ShapeTypes.Circle, identifier: 6.35}
       ],
@@ -83,10 +81,10 @@ const info = {
         { display:  "60mm travel" , size: [slidepot_width, 60] , identifier: 60 , shape: ShapeTypes.RoundedRectangle },
         { display:  "100mm travel", size: [slidepot_width, 100], identifier: 100, shape: ShapeTypes.RoundedRectangle },
       ],
-      toggle_switch: [
-        { display:  "Toggle",           size: 12.3, identifier: 12.3, shape: ShapeTypes.Circle },
-        { display:  "Mini Toggle",      size: 6.0 , identifier: 6   , shape: ShapeTypes.Circle },
-        { display:  "Sub-Mini Toggle",  size: 5.0 , identifier: 5   , shape: ShapeTypes.Circle },
+      toggleswitch: [
+        { display:  "Toggle 12.3mm",        size: 12.3, identifier: 12.3, shape: ShapeTypes.Circle },
+        { display:  "Mini Toggle 6mm",      size: 6.0 , identifier: 6   , shape: ShapeTypes.Circle },
+        { display:  "Sub-Mini Toggle 5mm",  size: 5.0 , identifier: 5   , shape: ShapeTypes.Circle },
       ],
       led: [
         { display:  "Standard 5mm round",   identifier: "5mm-round",   size: 5      , shape: ShapeTypes.Circle },
@@ -95,6 +93,14 @@ const info = {
         { display:  "3mm round",            identifier: "3mm-round",   size: 3      , shape: ShapeTypes.Circle },
         { display:  "1.8mm round",          identifier: "1.8mm-round", size: 1.8    , shape: ShapeTypes.Circle },
       ]
+    },
+
+    feature_defaults: {
+      patchpoint: 0,
+      rotarypot: 0,
+      slidepot: 2,
+      toggleswitch: 1,
+      led: 0,
     },
   
     // these are potential positioning frames of reference.

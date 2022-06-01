@@ -138,14 +138,18 @@ document.addEventListener('alpine:init', () => {
     vp_index: 2, // how many U it is.
     hp_index: 3,
     hp_inset: true,
+    margin: info.constants.default_margin,
     holes_index: 0,
     oval_screwholes: false,
     features: [],
 
     addFeature(feature_type) {
+      const feature_index = info.feature_defaults[feature_type];
+      const feature_size_id = info.feature_size_options[feature_type][feature_index].identifier;
+      console.log(`feature type ${feature_type} found feature index ${feature_index} with id ${feature_size_id}`);
       this.features.push({
         type: feature_type,
-        identifier: info.feature_size_options[feature_type][0].identifier,
+        identifier: feature_size_id,
         rot90: false,
         position: {
           x: 0.00,

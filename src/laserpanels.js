@@ -17,22 +17,22 @@ const { rotate } = require('@jscad/modeling/src/operations/transforms');
 // ********************
 
 // this function draws features that will be subtracted from the main panel
-const renderFeature = (feature, width, height) => {
+const renderFeature = (feature, width, height, margin) => {
   const feature_options = get_feature_info_by_identifier(feature.type, feature.identifier);
 
   if (feature_options.shape == ShapeTypes.Circle) {
     return translate(
       info.frames_of_reference[feature.position.relative_to].fn(feature.position, width, height),
-      circle({ radius: feature_options.size/2.0, segments: info.constants.circle_quality})
+      circle({ radius: feature_options.size/2.0 + margin, segments: info.constants.circle_quality})
     )
   } else if (feature_options.shape == ShapeTypes.Square) {
     return translate(
       info.frames_of_reference[feature.position.relative_to].fn(feature.position, width, height),
-      rectangle({size: [feature_options.size, feature_options.size]})
+      rectangle({size: [feature_options.size + margin*2, feature_options.size + margin*2]})
     )
   } else if (feature_options.shape == ShapeTypes.RoundedRectangle) {
     // check if the feature is flipped or not.
-    const rect = { x: feature_options.size[0], y: feature_options.size[1] };
+    const rect = { x: feature_options.size[0] + margin*2, y: feature_options.size[1] + margin*2 };
     const smallest_side = rect.x > rect.y ? rect.y : rect.x;
     const shape = roundedRectangle({ size: [rect.x, rect.y], roundRadius: (smallest_side/2.0)-0.01 });
     const shape_in_pos = translate(
@@ -43,7 +43,7 @@ const renderFeature = (feature, width, height) => {
     return shape_in_pos_rot;
   } else if (feature_options.shape == ShapeTypes.Rectangle) {
     // check if the feature is flipped or not.
-    const rect = { x: feature_options.size[0], y: feature_options.size[1] };
+    const rect = { x: feature_options.size[0] + margin*2, y: feature_options.size[1] + margin*2 };
     const shape = rectangle({ size: [rect.x, rect.y] });
     const shape_in_pos = translate(
       info.frames_of_reference[feature.position.relative_to].fn(feature.position, width, height),
@@ -112,11 +112,11 @@ const create_entities = (model, flat_only) => {
   });
 
   const rendered_subtract_features = subtract_features.map(function(feature) {
-    return renderFeature(feature, actual_width, panel_height)
+    return renderFeature(feature, actual_width, panel_height, model.margin)
   });
 
   const rendered_non_subtract_features = non_subtract_features.map(function(feature) {
-    return renderFeature(feature, actual_width, panel_height)
+    return renderFeature(feature, actual_width, panel_height, model.margin)
   });
 
   const panel = subtract(panel_outline, screw_holes, ...rendered_subtract_features);

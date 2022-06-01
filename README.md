@@ -20,7 +20,6 @@ It uses `yarn` for package management, and `parcel` for bundling the various mod
 
 ### TODOs:
 
-1. Use the "margin" value that users enter in the modeling
 2. Check oval hole width on a real module to confirm the size
 
 #### Features that would be nice but I am not currently working on (pull requests welcome):

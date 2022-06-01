@@ -59,6 +59,17 @@
       </tr>
       <tr>
         <td>
+          <a href="#doepferinsets">Doepfer Insets</a>
+        </td>
+        <td>
+          <label for="hp_inset" style="display: inline">
+            <input type="checkbox" x-model="hp_inset" @change="re_render($store.panel)" id="hp_inset" name="hp_inset" role="switch">
+            Enabled
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td>
           Screw configuration:
         </td>
         <td>
@@ -180,7 +191,7 @@
     <li>Eurorack screw holes are <span x-text="info.constants.screw_hole_radius*2"></span>mm in diamter</li>
     <li>1 HP is <span x-text="info.constants.horizontal_pitch_mm"></span>mm</li>
     <li>Screw hole spacing is calculated as <code>max(module_hp - 3, 0) * 1HP</code></li>
-    <li>The actual width of a eurorack panel is slightly less than the nominal width, I don't understand the formula doepfer uses, but I've copied the data from the table on <a href="https://doepfer.de/a100_man/a100m_e.htm">this page</a>.</li>
+    <li id="doepferinsets">Doepfer Insets: In the official spec, the actual width of a eurorack panel is slightly less than the <a href="https://doepfer.de/a100_man/a100m_e.htm">calculated width</a>, to leave a small space between panels. This part of the spec isn't always followed.</li>
     <li>Slide potentiometers require a <span x-text="info.constants.slidepot_width"></span>mm opening</li>
     <li>Rotary potentiometers require about a <span x-text="info.constants.rotarypot_margin"></span>mm margin</li>
     <li>The exported files make NO attempt to account for laser kerf width.</li>

@@ -59,7 +59,7 @@ const renderFeature = (feature, width, height) => {
 const create_entities = (model, flat_only) => {
   const hp_looked_up = info.hp_options[model.hp_index];
   const holes = info.hole_positions[model.holes_index];
-  const actual_width = hp_looked_up.actual;
+  const actual_width = model.hp_inset ? hp_looked_up.actual : hp_looked_up.hp * info.constants.horizontal_pitch_mm;
   const vertical_data = info.vp_options[model.vp_index];
   const panel_height = vertical_data.height;
   const screw_height = vertical_data.screw_height;
@@ -137,6 +137,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.store('panel', {
     vp_index: 2, // how many U it is.
     hp_index: 3,
+    hp_inset: true,
     holes_index: 0,
     oval_screwholes: false,
     features: [],

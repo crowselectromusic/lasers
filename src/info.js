@@ -1,8 +1,16 @@
+const ShapeTypes = {
+  Circle: "circle",
+  Square: "square",
+  Rectangle: "rectangle",
+  RoundedRectangle: "rounded-rectangle"
+};
+
+const slidepot_width = 2.0;
+
 const info = {
     constants: {
       screw_hole_radius: 3.2/2.0, //mm
       horizontal_pitch_mm: 5.08, //mm
-      slidepot_width: 2.0, // mm
       rotarypot_margin: 0.1, // mm // TODO THIS IS UNUSED
       toggleswitch_margin: 0.1, // mm // TODO THIS IS UNUSED
       patchpoint_margin: 0.1, // mm // TODO THIS IS UNUSED
@@ -12,8 +20,8 @@ const info = {
     // vertical pitch options
     // TODO: once i've added the data for vp_options, we may just be able to change screw_height to be calculated (total_height - (3mm*2))  
     vp_options: [ // keyed by model.vp_index
-      { display: "1U \"Pulp Logic\" tiles", nominal: 1, height: 43.18, screw_height: 37.19, identifier: "1u-pulp"},
-      { display: "1U \"Intellijel\" tiles", nominal: 1, height: 39.65, screw_height: 33.65, identifier: "1u-intellijel"},
+      { display: "1U tiles (Pulp Logic)", nominal: 1, height: 43.18, screw_height: 37.19, identifier: "1u-pulp"},
+      { display: "1U tiles (Intellijel)", nominal: 1, height: 39.65, screw_height: 33.65, identifier: "1u-intellijel"},
       { display: "3U Standard Eurorack Size", nominal: 3, height: 128.50, screw_height: 122.5, identifier: "3u"},
     ],
   
@@ -59,30 +67,33 @@ const info = {
     // Size choices, arranged by feature
     feature_size_options: {
       patch_point: [
-        { display:  "3.5mm / 1/8\"", size: 3.5   },
-        { display: "6.35mm / 1/4\"", size: 6.35 }
+        { display:  "3.5mm / 1/8\"", size: 3.5  , shape: ShapeTypes.Circle, identifier: 3.5},
+        { display: "6.35mm / 1/4\"", size: 6.35 , shape: ShapeTypes.Circle, identifier: 6.35}
       ],
       rotarypot: [
-        { display:  "6mm shaft", size: 6.0   },
-        { display:  "6.3mm shaft", size: 6.3 }
+        { display:  "6mm shaft", size: 6.0             , identifier: 6.0 , shape: ShapeTypes.Circle },
+        { display:  "6.35mm (1/4\") shaft", size: 6.35 , identifier: 6.35, shape: ShapeTypes.Circle },
+        { display:  "6mm shaft, 7mm bushing", size: 7.0, identifier: 7   , shape: ShapeTypes.Circle },
       ],
       slidepot: [
-        { display:  "20mm travel", size: 20   },
-        { display:  "25mm travel", size: 25   },
-        { display:  "30mm travel", size: 30   },
-        { display:  "35mm travel", size: 35   },
-        { display:  "40mm travel", size: 40   },
-        { display:  "45mm travel", size: 45   },
+        { display:  "15mm travel" , size: [slidepot_width, 15] , identifier: 15 , shape: ShapeTypes.RoundedRectangle },
+        { display:  "20mm travel" , size: [slidepot_width, 20] , identifier: 20 , shape: ShapeTypes.RoundedRectangle },
+        { display:  "30mm travel" , size: [slidepot_width, 30] , identifier: 30 , shape: ShapeTypes.RoundedRectangle },
+        { display:  "45mm travel" , size: [slidepot_width, 45] , identifier: 45 , shape: ShapeTypes.RoundedRectangle },
+        { display:  "60mm travel" , size: [slidepot_width, 60] , identifier: 60 , shape: ShapeTypes.RoundedRectangle },
+        { display:  "100mm travel", size: [slidepot_width, 100], identifier: 100, shape: ShapeTypes.RoundedRectangle },
       ],
       toggle_switch: [
-        { display:  "TS",   size: 8.0  },
-        { display:  "MTS",  size: 6.0  },
-        { display:  "SMTS", size: 6.3  } // sice SIZE is the key, these need to be unique
+        { display:  "Toggle",           size: 12.3, identifier: 12.3, shape: ShapeTypes.Circle },
+        { display:  "Mini Toggle",      size: 6.0 , identifier: 6   , shape: ShapeTypes.Circle },
+        { display:  "Sub-Mini Toggle",  size: 5.0 , identifier: 5   , shape: ShapeTypes.Circle },
       ],
       led: [
-        { display:  "Standard Xmm", size: 4  },
-        { display:  "Weird small",  size: 2  },
-        { display:  "Weird big",    size: 6  }
+        { display:  "Standard 5mm round",   identifier: "5mm-round",   size: 5      , shape: ShapeTypes.Circle },
+        { display:  "5mm square",           identifier: "5mm-square",  size: 5      , shape: ShapeTypes.Square },
+        { display:  "5x2mm rectangle",      identifier: "5x2mm-rect",  size: [5, 2] , shape: ShapeTypes.Rectangle },
+        { display:  "3mm round",            identifier: "3mm-round",   size: 3      , shape: ShapeTypes.Circle },
+        { display:  "1.8mm round",          identifier: "1.8mm-round", size: 1.8    , shape: ShapeTypes.Circle },
       ]
     },
   
@@ -100,7 +111,13 @@ const info = {
     },
   }
 
+  const get_feature_info_by_identifier = (type, identifier) => {
+    return info.feature_size_options[type].find(item => item.identifier == identifier);
+  }
+
   module.exports = {
-      info
+      info,
+      get_feature_info_by_identifier,
+      ShapeTypes
   };
   

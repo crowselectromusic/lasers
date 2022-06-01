@@ -1,6 +1,6 @@
 const dxfSerializer = require('@jscad/dxf-serializer');
 const svgSerializer = require('@jscad/svg-serializer');
-const { info } = require('./info.js');
+const { info, get_feature_info_by_identifier, ShapeTypes } = require('./info.js');
 const FileSaver = require('file-saver');
 
 const DefaultFilename = "export.json";
@@ -56,10 +56,16 @@ function parseFeature(feature) {
     if (!feature.type) {
       return undefined; // no type, no feature.
     }
-    
+
+    const feature_id = feature.identifier || info.feature_size_options[importFeature.type][0].identifier;
+    if (!feature_id) {
+        return undefined;
+    }
+
     return {
       type: feature.type,
-      size: feature.size || info.feature_size_options[importFeature.type][0].size || 5,
+      identifier: feature_id,
+      rot90: feature.rot90 == undefined ? false : feature.rot90,
       position: {
         x: feature.position.x || 0,
         y: feature.position.y || 0,
@@ -78,7 +84,8 @@ const ImportExport = (create_entities, re_render) => {
         outputObj.features = model.features.map(function(feature){
           return {
             type: feature.type,
-            size: feature.size,
+            identifier: feature.identifier,
+            rot90: feature.rot90,
             position: {
               x: feature.position.x,
               y: feature.position.y,

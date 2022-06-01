@@ -102,9 +102,9 @@
             Size:
           </td>
           <td>
-            <select x-model.number="feature.size" @change="re_render($store.panel)">
-              <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.size">
-                <option x-text="size_option.display" :value="size_option.size" :selected="size_option.size === feature.size"></option>
+            <select x-model="feature.identifier" @change="re_render($store.panel)">
+              <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.identifier">
+                <option x-text="size_option.display" :value="size_option.identifier" :selected="size_option.identifier === feature.identifier"></option>
               </template>
             </select>
           </td>
@@ -129,6 +129,18 @@
               </select>
             </td>
           </tr>
+            <tr x-show="can_be_flipped(feature.type, feature.identifier)">
+              <td>
+                Orientation:
+              </td>
+              <td>
+                <label for="horizontal" style="display: inline">
+                  <input type="checkbox" x-model="feature.rot90" @change="re_render($store.panel)" id="horizontal" name="horizontal" role="switch">
+                  Rotated
+                </label>
+              </td>
+            </tr>
+          </template>
         </table>
       </template>
   </div>

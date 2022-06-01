@@ -9,7 +9,8 @@ const { intersect, subtract } = booleans;
 const { colorize } = colors;
 
 const { JSCADWrapper } = require('./jscad_wrapper.js');
-const { info } = require('./info.js'); // constants like hp & menu options like toggle switch sizes
+const { info, get_feature_info_by_identifier, ShapeTypes } = require('./info.js'); // constants like hp & menu options like toggle switch sizes
+const { rotate } = require('@jscad/modeling/src/operations/transforms');
 
 // ********************
 // The design to render.
@@ -17,16 +18,39 @@ const { info } = require('./info.js'); // constants like hp & menu options like 
 
 // this function draws features that will be subtracted from the main panel
 const renderFeature = (feature, width, height) => {
-  if (feature.type == "slidepot") {
+  const feature_options = get_feature_info_by_identifier(feature.type, feature.identifier);
+
+  if (feature_options.shape == ShapeTypes.Circle) {
     return translate(
       info.frames_of_reference[feature.position.relative_to].fn(feature.position, width, height),
-      roundedRectangle({ size: [info.constants.slidepot_width, feature.size], roundRadius: info.constants.slidepot_width/2-0.01 })
+      circle({ radius: feature_options.size/2.0, segments: info.constants.circle_quality})
     )
-  } else {
+  } else if (feature_options.shape == ShapeTypes.Square) {
     return translate(
       info.frames_of_reference[feature.position.relative_to].fn(feature.position, width, height),
-      circle({ radius: feature.size/2.0, segments: info.constants.circle_quality})
+      rectangle({size: [feature_options.size, feature_options.size]})
     )
+  } else if (feature_options.shape == ShapeTypes.RoundedRectangle) {
+    // check if the feature is flipped or not.
+    const rect = { x: feature_options.size[0], y: feature_options.size[1] };
+    const smallest_side = rect.x > rect.y ? rect.y : rect.x;
+    const shape = roundedRectangle({ size: [rect.x, rect.y], roundRadius: (smallest_side/2.0)-0.01 });
+    const shape_in_pos = translate(
+      info.frames_of_reference[feature.position.relative_to].fn(feature.position, width, height),
+      shape
+    );
+    const shape_in_pos_rot = feature.rot90 ? rotate([0,0, Math.PI/2], shape_in_pos) : shape_in_pos;
+    return shape_in_pos_rot;
+  } else if (feature_options.shape == ShapeTypes.Rectangle) {
+    // check if the feature is flipped or not.
+    const rect = { x: feature_options.size[0], y: feature_options.size[1] };
+    const shape = rectangle({ size: [rect.x, rect.y] });
+    const shape_in_pos = translate(
+      info.frames_of_reference[feature.position.relative_to].fn(feature.position, width, height),
+      shape
+    );
+    const shape_in_pos_rot = feature.rot90 ? rotate([0,0, Math.PI/2], shape_in_pos) : shape_in_pos;
+    return shape_in_pos_rot;
   }
   return undefined;
 }
@@ -120,7 +144,8 @@ document.addEventListener('alpine:init', () => {
     addFeature(feature_type) {
       this.features.push({
         type: feature_type,
-        size: info.feature_size_options[feature_type][0].size,
+        identifier: info.feature_size_options[feature_type][0].identifier,
+        rot90: false,
         position: {
           x: 0.00,
           y: 0.00,
@@ -147,6 +172,12 @@ const jscad = JSCADWrapper(containerElement, create_entities);
 window.re_render = jscad.re_render; // make re_render available to alpine scripts in html
 window.info = info; // make info available to alpine scripts in html
 window.ImportExport = require('./import_export.js')(create_entities, re_render);
+
+window.can_be_flipped = (type, identifier) => {
+  const feature_opts = get_feature_info_by_identifier(type, identifier);
+  const shape_is_asym = feature_opts.shape == ShapeTypes.Rectangle || feature_opts.shape == ShapeTypes.RoundedRectangle;
+  return shape_is_asym;
+}
 //window.Alpine = Alpine;
 Alpine.start();
 

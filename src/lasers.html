@@ -33,7 +33,7 @@
       </tr>
       <tr>
         <td>
-          <a href="#format-info">Format</a>:
+          <a href="#format-info" onclick="open_section(this.href)">Format</a>:
         </td>
         <td>
           <select x-model.number="vp_index" @change="re_render($store.panel)">
@@ -59,7 +59,7 @@
       </tr>
       <tr>
         <td>
-          <a href="#doepferinsets-info">Doepfer Insets</a>:
+          <a href="#doepferinsets-info" onclick="open_section(this.href)">Doepfer Insets</a>:
         </td>
         <td>
           <label for="hp_inset" style="display: inline">
@@ -86,7 +86,7 @@
       </tr>
       <tr>
         <td>
-          <a href="#margins-info">Margins</a> (<span x-text="margin"></span>mm):
+          <a href="#margins-info" onclick="open_section(this.href)">Margins</a> (<span x-text="margin"></span>mm):
         </td>
         <td>
           <input type="range"

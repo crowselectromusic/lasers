@@ -193,3 +193,7 @@ window.onbeforeunload = function(event) {
   }
   return undefined;
 };
+
+window.open_section = (name) => {
+  document.getElementById(new URL(name).hash.replace("#",'')).setAttribute("open","");
+}

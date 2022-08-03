@@ -114,65 +114,63 @@
         </td>
       </tr>
     </table>
-
-    <template x-for="(feature, index) in features" :key="index">
-    <table class="outlined-table">
-        <tr>
-          <td class="feature-table-top-cell" colspan="2">
-            <span x-text="`${index+1}. `"></span>
-            <a :href="`#${feature.type}-info`" x-text="info.feature_types[feature.type]" class="featuretitle"></a>
-            <span style="float:right;"><button @click="deleteFeature(index)">Delete feature</button></span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Size:
-          </td>
-          <td>
-            <select x-model="feature.identifier" @change="re_render($store.panel)">
-              <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.identifier">
-                <option x-text="size_option.display" :value="size_option.identifier" :selected="size_option.identifier === feature.identifier"></option>
-              </template>
-            </select>
-          </td>
-          <tr>
-            <td>
-              Position (X, Y):
-            </td>
-            <td>
-              <input type="number" step="0.5" x-model.number="feature.position.x" @change="re_render($store.panel)" style="width: 49%;">
-              <input type="number" step="0.5" x-model.number="feature.position.y" @change="re_render($store.panel)" style="width: 49%;">
-            </td>
-          </tr>
-          <tr>
-            <td class="feature-table-bottom-cell">
-              Relative to:
-            </td>
-            <td class="feature-table-bottom-cell">
-              <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
-                <template x-for="(pos, index) in info.frames_of_reference" :key="index">
-                  <option x-text="pos.display" :value="index" :selected="index === feature.position.relative_to"></option>
-                </template>
-              </select>
-            </td>
-          </tr>
-            <tr x-show="can_be_flipped(feature.type, feature.identifier)">
-              <td>
-                Orientation:
-              </td>
-              <td>
-                <label for="horizontal" style="display: inline">
-                  <input type="checkbox" x-model="feature.rot90" @change="re_render($store.panel)" id="horizontal" name="horizontal" role="switch">
-                  Rotated
-                </label>
-              </td>
-            </tr>
-          </template>
-        </table>
-      </template>
   </div>
   <div id="jscad" class="item"></div>
 </div>
+
+<div id="features" class="grid container-fluid" x-data>
+  <table class="outlined-table">
+    <tr>
+      <th>Delete</th>
+      <th>#</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Position</th>
+      <th>Relative to</th>
+      <th>Orientation</th>
+    </tr>
+  <template x-for="(feature, index) in $store.panel.features" :key="index">
+    <tr>
+      <td>
+        <span style="float:right;"><button @click="$store.panel.deleteFeature(index)">Delete feature</button></span>
+      </td>
+      <td>
+        <span x-text="`${index+1}. `"></span>
+      </td>
+      <td>
+        <a :href="`#${feature.type}-info`" x-text="info.feature_types[feature.type]" class="featuretitle"></a>
+      </td>
+      <td>
+        <select x-model="feature.identifier" @change="re_render($store.panel)">
+          <template x-for="size_option in info.feature_size_options[feature.type]" :key="size_option.identifier">
+            <option x-text="size_option.display" :value="size_option.identifier" :selected="size_option.identifier === feature.identifier"></option>
+          </template>
+        </select>
+      </td>
+      <td>
+        <input type="number" step="0.5" x-model.number="feature.position.x" @change="re_render($store.panel)" style="width: 49%;">
+        <input type="number" step="0.5" x-model.number="feature.position.y" @change="re_render($store.panel)" style="width: 49%;">
+      </td>
+      <td>
+        <select x-model="feature.position.relative_to" @change="re_render($store.panel)">
+          <template x-for="(pos, index) in info.frames_of_reference" :key="index">
+            <option x-text="pos.display" :value="index" :selected="index === feature.position.relative_to"></option>
+          </template>
+        </select>
+      </td>
+      <td>
+        <div x-show="can_be_flipped(feature.type, feature.identifier)">
+        <label for="horizontal" style="display: inline">
+          <input type="checkbox" x-model="feature.rot90" @change="re_render($store.panel)" id="horizontal" name="horizontal" role="switch">
+          Rotated
+        </label>
+        </div>
+      </td>
+    </tr>
+  </template>
+  </table>
+</div>
+
 
 <div class="notes">
   <h2>Notes</h2>

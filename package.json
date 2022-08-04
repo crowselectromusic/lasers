@@ -12,6 +12,7 @@
     "@jscad/svg-serializer": "^2.3.7",
     "@picocss/pico": "^1.5.2",
     "alpinejs": "^3.10.2",
+    "bootstrap-icons": "^1.9.1",
     "file-saver": "^2.0.5"
   },
   "devDependencies": {

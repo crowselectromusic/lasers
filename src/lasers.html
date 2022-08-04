@@ -100,20 +100,6 @@
         </td>
       </tr>
     </table>
-    <table class="outlined-table">
-      <tr>
-        <td colspan="2"><span class="sectiontitle">Add features</span></td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <div class="addbuttons">
-            <template x-for="(feature_name, feature_type) in info.feature_types">
-              <button x-text="feature_name" @click="addFeature(feature_type)"></button>
-            </template>
-            </div>
-        </td>
-      </tr>
-    </table>
   </div>
   <div id="jscad" class="item"></div>
 </div>
@@ -121,21 +107,29 @@
 <div id="features" class="grid container-fluid" x-data>
   <table class="outlined-table">
     <tr>
-      <th>Delete</th>
-      <th>#</th>
+      <td>Add Feature</td>
+      <template x-for="(feature_name, feature_type) in info.feature_types">
+        <td width="20%">
+          <button x-text="feature_name" @click="$store.panel.addFeature(feature_type)"></button>
+        </td>
+      </template>
+    </tr>
+    <tr>
+      <th></th>
       <th>Type</th>
       <th>Size</th>
       <th>Position</th>
       <th>Relative to</th>
-      <th>Orientation</th>
+      <th></th>
     </tr>
   <template x-for="(feature, index) in $store.panel.features" :key="index">
     <tr>
       <td>
-        <span style="float:right;"><button @click="$store.panel.deleteFeature(index)">Delete feature</button></span>
-      </td>
-      <td>
-        <span x-text="`${index+1}. `"></span>
+        <span style="float:right;"><button @click="$store.panel.deleteFeature(index)">
+          <svg class="bi" width="16" height="16" fill="currentColor">
+            <use xlink:href="../node_modules/bootstrap-icons/bootstrap-icons.svg#trash"/>
+          </svg>          
+        </button></span>
       </td>
       <td>
         <a :href="`#${feature.type}-info`" x-text="info.feature_types[feature.type]" class="featuretitle"></a>

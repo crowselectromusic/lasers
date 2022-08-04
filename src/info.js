@@ -55,11 +55,11 @@ const info = {
   
     // the chosen hole placement - this CLOUD be restricted by your choice of HP (hp_options incudes a holes property)
     hole_positions: [ // keyed by model.holes_index
-      { screw_positions: ["tl", "br"], display: "\u2801\u00A0\u2804"                    },  // ⠈  ⠄
-      { screw_positions: ["tr", "bl"], display: "\u2804\u00A0\u2801"                    },  // ⠄  ⠈
-      { screw_positions: ["tr", "br"], display: "\u00A0\u00A0\u00A0\u205A"              },  //    ⠅
-      { screw_positions: ["tl", "bl"], display: "\u205A\u00A0\u00A0"                    },  // ⠅
-      { screw_positions: ["tl", "tr", "bl", "br"], display: "\u205A\u00A0\u00A0\u205A"  }   // ⠅  ⠅
+      { screw_positions: ["tl", "br"], display:             "[\u2801\u00A0\u2804] - 2 - top left, bottom right"                    },  // ⠈  ⠄
+      { screw_positions: ["tr", "bl"], display:             "[\u2804\u00A0\u2801] - 2 - top right, bottom left"                    },  // ⠄  ⠈
+      { screw_positions: ["tr", "br"], display:             "[\u00A0\u00A0\u00A0\u00A0\u205A] - 2 - top right, bottom right"              },  //    ⠅
+      { screw_positions: ["tl", "bl"], display:             "[\u205A\u00A0\u00A0\u00A0\u00A0] - 2 - top left, bottom left"                    },  // ⠅
+      { screw_positions: ["tl", "tr", "bl", "br"], display: "[\u205A\u00A0\u00A0\u00A0\u205A] - 4 - all corners"  }   // ⠅  ⠅
     ],
   
     // Size choices, arranged by feature

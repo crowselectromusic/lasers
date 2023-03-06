@@ -3,7 +3,7 @@
 
 A simple web app to generate front panels for modular synthesizers using a laser cutter. 
 
-![Screenshot of Crows Eurorack Laser Panel Maker](imgs/screenshot-2022-05-27.png)
+[![Screenshot of Crows Eurorack Laser Panel Maker](imgs/screenshot-2022-05-27.png)](https://crowselectromusic.com/tools/eurorack/laser-panels/)
 
 Inspired by [MakerCase](https://www.makercase.com/), and based on the simply *amazing* [JSCAD](https://github.com/jscad/OpenJSCAD.org), which is in turn based on the delightful, but desktop-only, [OpenSCAD](https://openscad.org/).
 

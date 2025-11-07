@@ -9,14 +9,13 @@ Inspired by [MakerCase](https://www.makercase.com/), and based on the simply *am
 
 Interface stuff is done with [AlpineJS](https://alpinejs.dev/), because I wanted to take that for a spin. It's a bit opaque and "magical" but it's worked well for quickly developing this.
 
-It uses `yarn` for package management, and `parcel` for bundling the various modules up for the web, but you don't need to worry about that unless you're diving deep. To get started, all you need to know is:
+It uses `npm` for package management, and `parcel` for bundling the various modules up for the web, but you don't need to worry about that unless you're diving deep. To get started, all you need to know is:
 
 ## Development Guide
 
-1. If you don't have it already, [install yarn](https://yarnpkg.com/getting-started/install).
-2. In the root project directory, run `yarn install` - this fetches all the dependencies (mostly openjscad + alpinejs)
-3. To run the development server, run `yarn start`, visit the URL it spits out. The page will auto-reload if you make changes.
-4. To output build files to the `./dist` directory, run `yarn build`.
+2. In the root project directory, run `npm install` - this fetches all the dependencies (mostly openjscad + alpinejs)
+3. To run the development server, run `npm start`, visit the URL it spits out. The page will auto-reload if you make changes.
+4. To output build files to the `./dist` directory, run `npm run build`.
 
 ### TODOs:
 
